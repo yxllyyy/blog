@@ -261,3 +261,135 @@ function useState<T>(state: T) {
   return tuple;
 }
 ```
+
+## 函数的参数类型
+
+函数是 JavaScript 非常重要的组成部分，TypeScript 允许我们指定函数的参数和返回值的类型
+
+参数的类型注解
+
+- 声明函数时，可以在每个参数后添加类型注解，以声明函数接受的参数类型：
+
+```ts
+function foo(num1: number, num2: number) {
+  return num1 + num2;
+}
+```
+
+## 函数的返回值类型
+
+我们也可以添加返回值的类型注解，这个注解出现在函数列表的后面：
+
+- 和变量的类型注解一样，我们通常情况下不需要返回类型注解，因为 TypeScript 会根据 return 返回值推断函数的
+  返回类型：
+- 某些第三方库处于方便理解，会明确指定返回类型，但是这个看个人喜好
+
+```ts
+function bar(num1: number, num2: number): number {
+  return num1 + num2;
+}
+
+//  类型推导
+function foo(num1: number, num2: number) {
+  return num1 + num2;
+}
+```
+
+## 匿名函数的参数(Arguments to an anonymous function)
+
+匿名函数与函数声明会有一些不同：
+
+- 当一个函数出现在 TypeScript 可以确定该函数会被如何调用的地方时；
+- 该函数的参数会自动指定类型
+
+```ts
+const names = ["abc", "cba", "nba"];
+names.map((value) => {
+  value.split("");
+});
+```
+
+我们并没有指定 value 的类型，但是 value 是一个 string 类型：
+
+- 这是因为 TypeScript 会根据 map 函数的类型以及数组的类型推断出 item 的类型
+- 这个过程称之为**上下文类型（contextual typing）**，因为函数执行的上下文可以帮助确定参数和返回值的类型
+
+## 对象类型(Object type)
+
+顾名思义,对象类型形式很像对象字面量
+
+```ts
+function foo(info: { name: string; age: number }) {
+  console.log(info.x);
+  console.log(info.y);
+}
+foo({ name: "tao", age: 18 });
+```
+
+## 可选类型(Optional type)
+
+对于函数传入的参数我们可以指定那些是可选的,可以在参数后面加上一个`?`
+
+```ts
+function foo(name: string, age: number, flag?: boolean) {
+  console.log("aaa");
+}
+
+foo("tao", 18, true);
+foo("sandy", 21);
+```
+
+## 联合类型(The joint type)
+
+联合类型是由两个或者多个其他类型组成的类型
+
+- 表示可以是这些类型中的任何一个值
+- 联合类型中的每一个类型被称之为联合成员
+
+```ts
+function foo(x: string | number) {
+  console.log(x);
+}
+
+foo("abc");
+foo(123);
+```
+
+传入给一个联合类型的值是非常简单的：只要保证是联合类型中的某一个类型的值即可
+
+- 但是我们拿到这个值之后，我们应该如何使用它呢？因为它可能是任何一种类型
+- 比如我们拿到的值可能是 string 或者 number，我们就不能对其调用 string 上的一些方法
+
+那么我们怎么处理这样的问题呢？
+
+- 我们需要使用类型缩小（后续我们还会专门讲解缩小相关的功能）
+- TypeScript 可以根据我们缩小的代码结构，推断出更加具体的类型
+
+```ts
+function foo(x: string | number) {
+  if (typeof x === "string") {
+    console.log(x.length);
+  } else {
+    console.log(x);
+  }
+}
+
+foo("abc");
+foo(123);
+```
+
+其实上，可选类型可以看做是 类型 和 undefined 的联合类型：
+
+```ts
+function foo(x?: number) {
+  console.log(x);
+}
+// 两者写法其实是相似的
+// 只不过语法上有所不同,可选类型表明你必须明确传入其中一种类型
+// function foo(x: number | undefined) {
+//   console.log(x)
+// }
+
+foo(2);
+foo(undefined);
+```
