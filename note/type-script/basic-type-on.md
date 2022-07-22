@@ -393,3 +393,83 @@ function foo(x?: number) {
 foo(2);
 foo(undefined);
 ```
+
+## 字面量类型(Literal type)
+
+除了前面我们所讲过的类型之外，也可以使用字面量类型
+
+```ts
+// 看上去message是一个string类型,实际上我们把鼠标移到message上
+// message是一个'Hello World'类型
+// 如何理解?
+// 因为通过const关键字定义的原始类型值是无法改变的
+const message = "Hello World";
+```
+
+那么这样做有什么意义呢？
+
+- 默认情况下这么做是没有太大的意义的，但是我们可以将多个类型联合在一起
+
+```ts
+type Direction = "left" | "right" | "top";
+function foo(direction: Direction) {
+  console.log("方向为:", direction);
+}
+foo("left");
+```
+
+## 字面量推理(Literal reasoning)
+
+我们来看下面的代码：
+
+```ts
+type Method = "GET" | "POST";
+function request(url: string, method: Method) {}
+const info = {
+  url: "https://baidu.com",
+  method: "GET",
+};
+
+request(info.url, info.method); // Error: 类型“string”的参数不能赋给类型“Method”的参数
+```
+
+因为类型推导会把 info 的类型变为对象类型,inof.url 的类型为 string,inof.method 的类型为 string
+
+request 的 method 要求我们传入"GET"或者是"POST"这种字面量类型,所以我们传入一个 string 类型肯定是不行的
+
+我们可以这样来做
+
+第一种方法通过定义接口,明确指定 info 的类型(接口后面会讲)
+
+```ts
+type Method = "GET" | "POST";
+function request(url: string, method: Method) {}
+
+//
+interface Info {
+  url: string;
+  method: Method;
+}
+const info: Info = {
+  url: "https://baidu.com",
+  method: "GET",
+};
+
+request(info.url, info.method);
+```
+
+第二种方法:通过 `as const` 断言
+
+```ts
+type Method = "GET" | "POST";
+function request(url: string, method: Method) {}
+
+// as const类型断言
+// 作用: 宽泛的类型 -> 具体的类型
+const info = {
+  url: "https://baidu.com",
+  method: "GET",
+} as const;
+
+request(info.url, info.method);
+```
