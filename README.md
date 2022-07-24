@@ -24,3 +24,4 @@
 3. [TypeScript 之常见类型(下)](https://github.com/likesandy/blog/issues/7)
 4. [TypeScript 之类型缩小](https://github.com/likesandy/blog/issues/8)
 5. [TypeScript 之函数](https://github.com/likesandy/blog/issues/9)
+6. [TypeScript 之类](https://github.com/likesandy/blog/issues/10)
