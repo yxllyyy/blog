@@ -25,3 +25,10 @@
 4. [TypeScript 之类型缩小](https://github.com/likesandy/blog/issues/8)
 5. [TypeScript 之函数](https://github.com/likesandy/blog/issues/9)
 6. [TypeScript 之类](https://github.com/likesandy/blog/issues/10)
+7. [TypeScript 之对象类型](https://github.com/likesandy/blog/issues/11)
+
+<!-- 泛型:类型参数化 -->
+
+## lib 库系列
+
+1.[Pinia](https://github.com/likesandy/blog/issues/12)

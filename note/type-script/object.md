@@ -210,3 +210,129 @@ type Fn = (num1: number, num2: number) => number;
 
 // Error: 标识符“Fn”重复
 ```
+
+## 严格的对象字面量赋值
+
+我们来看下面的代码：
+
+```ts
+interface IInfo {
+  name: string;
+  age: number;
+}
+
+const info: IInfo = {
+  name: "tao",
+  age: 18,
+  height: 1.88,
+};
+
+// Error: height”不在类型“IInfo”中
+```
+
+这是因为 TypeScript 在字面量直接赋值的过程中，为了进行类型推导会进行严格的类型限制
+
+但是如果我们是将一个 变量标识符 赋值给其他的变量时，会进行 `freshness` 擦除操作
+
+```ts
+interface IInfo {
+  name: string;
+  age: number;
+}
+
+const info2 = {
+  name: "tao",
+  age: 18,
+  height: 1.88,
+};
+
+// 这种freshness操作只会让编译器在编译的时候不会报错,但是你如果想使用类型以外的属性当然是不行的
+const info: IInfo = info2;
+console.log(info.height);
+// Error: 类型“IInfo”上不存在属性“height”
+```
+
+## 枚举类型
+
+枚举类型是为数不多的 TypeScript 特性有的特性之一：
+
+- 枚举其实就是将一组可能出现的值，一个个列举出来，定义在一个类型中，这个类型就是枚举类型
+- 枚举允许开发者定义一组命名常量，常量可以是数字、字符串类型(跟联合类型很像)
+- 使用 enum 关键字定义枚举
+
+```ts
+enum Direction {
+  LEFT,
+  RIGHT,
+  BOTTOM,
+  TOP,
+}
+
+function foo(direction: Direction) {
+  switch (direction) {
+    case Direction.LEFT:
+      console.log("向左");
+      break;
+    case Direction.RIGHT:
+      console.log("向右");
+      break;
+    case Direction.TOP:
+      console.log("向上");
+      break;
+    case Direction.BOTTOM:
+      console.log("向下");
+      break;
+    default:
+      const p: never = direction;
+      break;
+  }
+}
+```
+
+枚举类型默认是有值的，比如上面的枚举，默认值是这样的：
+
+```ts
+enum Direction {
+  LEFT,
+  RIGHT,
+  BOTTOM,
+  TOP,
+}
+
+console.log(Direction.LEFT); // 0
+console.log(Direction.RIGHT); // 1
+console.log(Direction.BOTTOM); // 2
+console.log(Direction.TOP); // 3
+```
+
+当然，我们也可以给枚举其他值：
+
+```ts
+enum Direction {
+  LEFT,
+  RIGHT = 200,
+  BOTTOM,
+  TOP,
+}
+
+console.log(Direction.LEFT); // 0
+console.log(Direction.RIGHT); // 200
+console.log(Direction.BOTTOM); // 201
+console.log(Direction.TOP); // 202
+```
+
+我们也可以给它们赋值其他的类型：
+
+```ts
+enum Direction {
+  LEFT,
+  RIGHT = "RIGHT",
+  BOTTOM = "BOTTOM",
+  TOP = "TOP",
+}
+
+console.log(Direction.LEFT); // 0
+console.log(Direction.RIGHT); // RIGHT
+console.log(Direction.BOTTOM); // BOTTOM
+console.log(Direction.TOP); // TOP
+```
