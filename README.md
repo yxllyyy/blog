@@ -1,11 +1,24 @@
 # codertao 的个人博客
 
+学习前端的个人笔记+搬运
+
 ## 优文转载
 
 | 2022 年                                            | 2023 年 |
 | -------------------------------------------------- | ------- |
 | [六月](https://github.com/likesandy/blog/issues/3) |         |
 | [七月](https://github.com/likesandy/blog/issues/4) |         |
+
+## 设计模式系列
+
+> 学习设计模式个人推荐两本不错的书: 1.<<大话设计模式>>
+
+1. [工厂模式](https://github.com/likesandy/blog/issues/5)
+2. [代理模式](https://github.com/likesandy/blog/issues/5)
+
+## JavaScript 系列
+
+1. [面向对象](https://github.com/likesandy/blog/issues/14)
 
 ## ESNext 系列
 
@@ -31,4 +44,4 @@
 
 ## lib 库系列
 
-1.[Pinia](https://github.com/likesandy/blog/issues/12)
+1. [Pinia](https://github.com/likesandy/blog/issues/12)
