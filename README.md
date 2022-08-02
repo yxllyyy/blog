@@ -8,6 +8,7 @@
 | -------------------------------------------------- | ------- |
 | [六月](https://github.com/likesandy/blog/issues/3) |         |
 | [七月](https://github.com/likesandy/blog/issues/4) |         |
+| [八月](https://github.com/likesandy/blog/issues/15) |         |
 
 ## 设计模式系列
 
